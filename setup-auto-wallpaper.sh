@@ -1,6 +1,18 @@
 #!/bin/sh
 PATH=/usr/local/bin:/usr/local/sbin:~/bin:/usr/bin:/bin:/usr/sbin:/sbin
 cd /tmp
+
+
+echo '
+     _ ___  ___    -------------------
+    (_) _ \/ _ \   | gimme wallpaper |
+    | \_, /\_, /   -------------------
+   _/ |/_/  /_/         \   ^__^
+  |__/                   \  (oo)\_______
+                            (__)\       )\/\
+                                ||----w |
+                                ||     ||
+'
 if [[ $EUID -eq 0 ]]; then
     echo "This script must not be run as root"  1>&2
     exit 1
