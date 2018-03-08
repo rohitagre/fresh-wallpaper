@@ -52,21 +52,23 @@ if [[ $response =~ ^[Yy]$ ]]; then
     
     crontab -l > mycron.txt
 
-    echo "Searching and removing old cron jobs set by this script (if any)"
-
     sed -i "" '/fresh-wallpaper/d' 'mycron.txt'
 
     echo "\nSelect The category (search term) from which you want images to be downloaded? [ex. adventure, nature, business, love etc]"
+    echo "Refer unsplash.com for possible categories (there are hundreds!)"
 
     read -r -p "Leave blank to fetch daily picture : " cxt
 
     if [[ -z "$cxt" ]]; then
-        echo "$freq curl -L --compressed "https://source.unsplash.com/1920x1080/daily" -o ~/Pictures/unsplash-wallpapers/\`date +"\\%d\\%m\\%Y\\%H"\`.jpg  >/dev/null 2>&1 #fresh-wallpaper" >> mycron.txt
+        echo "$freq curl -L --compressed "https://source.unsplash.com/1920x1080/daily" -o ~/Pictures/unsplash-wallpapers/\`date +"\\%Y\\%m\\%d\\%H"\`.jpg  >/dev/null 2>&1 #fresh-wallpaper" >> mycron.txt
+        curl -s -L --compressed "https://source.unsplash.com/1920x1080/daily" -o ~/Pictures/unsplash-wallpapers/`date +"\%Y\%m\%d\%H"`.jpg
+   
     else
-        echo "$freq curl -L --compressed "https://source.unsplash.com/1920x1080/?$cxt" -o ~/Pictures/unsplash-wallpapers/\`date +"\\%d\\%m\\%Y\\%H"\`.jpg  >/dev/null 2>&1 #fresh-wallpaper" >> mycron.txt
+        echo "$freq curl -L --compressed "https://source.unsplash.com/1920x1080/?$cxt" -o ~/Pictures/unsplash-wallpapers/\`date +"\\%Y\\%m\\%d\\%H"\`.jpg  >/dev/null 2>&1 #fresh-wallpaper" >> mycron.txt
+        curl -s -L --compressed "https://source.unsplash.com/1920x1080/?$cxt" -o ~/Pictures/unsplash-wallpapers/`date +"\%Y\%m\%d\%H"`.jpg
     fi
 
-    echo "$fchg osascript -e 'tell application \"System Events\" to tell every desktop to set picture to \"~/Pictures/unsplash-wallpapers/\`date +'\\%d\\%m\\%Y\\%H'\`.jpg\"' #fresh-wallpaper" >> mycron.txt
+    echo "$fchg osascript -e 'tell application \"System Events\" to tell every desktop to set picture to \"~/Pictures/unsplash-wallpapers/\`date +'\\%Y\\%m\\%d\\%H'\`.jpg\"' #fresh-wallpaper" >> mycron.txt
 
 #install new cron file
 
@@ -74,7 +76,8 @@ if [[ $response =~ ^[Yy]$ ]]; then
     crontab mycron.txt
     rm mycron.txt
 
-
+    echo "Changing wallpaper now!"
+    osascript -e 'tell application "System Events" to tell every desktop to set picture to "~/Pictures/unsplash-wallpapers/`date +'\%Y\%m\%d\%H'`.jpg"'
     echo "Done!"
 
 else
