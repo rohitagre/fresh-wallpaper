@@ -22,7 +22,11 @@ echo "This Script will create a new directory 'unsplash-wallpapers' \n under the
 
 read -r -p "Do you wish to Continue? [y/N] " response
 if [[ $response =~ ^[Yy]$ ]]; then
-    mkdir -p ~/Pictures/unsplash-wallpapers
+    if [ ! -e "/usr/local/bin/wallpaper" ]; then
+        curl -L "https://github.com/sindresorhus/macos-wallpaper/releases/latest" -o /usr/local/bin/wallpaper
+        chmod +x /usr/local/bin/wallpaper
+    fi
+    mkdir -p /Users/$(id -un)/Pictures/unsplash-wallpapers
     echo "How Often do you want to get new wallpaper?"
     echo "1. Every Hour"
     echo "2. Twice a day"
@@ -43,6 +47,11 @@ if [[ $response =~ ^[Yy]$ ]]; then
             echo "Once Every Day"
             freq="30 11 * * *"
             fchg="32 11 * * *";;
+	4) 
+            echo "Every minute"
+            freq="* * * * *"
+            fchg="* * * * *";;
+
         *)
             echo "Once Every Day"
             freq="30 11 * * *"
@@ -60,15 +69,15 @@ if [[ $response =~ ^[Yy]$ ]]; then
     read -r -p "Leave blank to fetch daily picture : " cxt
 
     if [[ -z "$cxt" ]]; then
-        echo "$freq curl -L --compressed "https://source.unsplash.com/1920x1080/daily" -o ~/Pictures/unsplash-wallpapers/\`date +"\\%Y\\%m\\%d\\%H"\`.jpg  >/dev/null 2>&1 #fresh-wallpaper" >> mycron.txt
-        curl -s -L --compressed "https://source.unsplash.com/1920x1080/daily" -o ~/Pictures/unsplash-wallpapers/`date +"\%Y\%m\%d\%H"`.jpg
+        echo "$freq curl -L --compressed "https://source.unsplash.com/1920x1080/daily" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg  >/dev/null 2>&1 #fresh-wallpaper" >> mycron.txt
+        curl -s -L --compressed "https://source.unsplash.com/1920x1080/daily" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg
    
     else
-        echo "$freq curl -L --compressed "https://source.unsplash.com/1920x1080/?$cxt" -o ~/Pictures/unsplash-wallpapers/\`date +"\\%Y\\%m\\%d\\%H"\`.jpg  >/dev/null 2>&1 #fresh-wallpaper" >> mycron.txt
-        curl -s -L --compressed "https://source.unsplash.com/1920x1080/?$cxt" -o ~/Pictures/unsplash-wallpapers/`date +"\%Y\%m\%d\%H"`.jpg
+        echo "$freq curl -L --compressed "https://source.unsplash.com/1920x1080/?$cxt" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg  >/dev/null 2>&1 #fresh-wallpaper" >> mycron.txt
+        curl -s -L --compressed "https://source.unsplash.com/1920x1080/?$cxt" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg
     fi
 
-    echo "$fchg osascript -e 'tell application \"System Events\" to tell every desktop to set picture to \"~/Pictures/unsplash-wallpapers/\`date +'\\%Y\\%m\\%d\\%H'\`.jpg\"' #fresh-wallpaper" >> mycron.txt
+    echo "$fchg  wallpaper /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg fill #fresh-wallpaper" >> mycron.txt
 
 #install new cron file
 
@@ -77,7 +86,7 @@ if [[ $response =~ ^[Yy]$ ]]; then
     rm mycron.txt
 
     echo "Changing wallpaper now!"
-    osascript -e 'tell application "System Events" to tell every desktop to set picture to "~/Pictures/unsplash-wallpapers/`date +'\%Y\%m\%d\%H'`.jpg"'
+    wallpaper /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg fill
     echo "Done!"
 
 else
