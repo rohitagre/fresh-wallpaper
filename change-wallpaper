@@ -1,6 +1,6 @@
 #!/bin/sh
 PATH=/usr/local/bin:/usr/local/sbin:~/bin:/usr/bin:/bin:/usr/sbin:/sbin
-if [[ -z "$cxt" ]]; then
+if [[ -z "$1" ]]; then
     curl -L -s --compressed "https://source.unsplash.com/1920x1080/daily" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/`date +"%s"`.jpg
 else
     curl -L -s --compressed "https://source.unsplash.com/1920x1080/?$1" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/`date +"%s"`.jpg
