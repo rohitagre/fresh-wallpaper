@@ -78,10 +78,10 @@ if [[ $response =~ ^[Yy]$ ]]; then
 
     if [[ -z "$cxt" ]]; then
         echo "32 11 * * *  /usr/local/bin/change-wallpaper #fresh-wallpaper" >> mycron.txt
-        echo "0 12 * * * find /Users/$(id -un)/Pictures/unsplash-wallpapers -mtime +$dfrq -type f -delete" >> mycron.txt
+        echo "0 12 * * * find /Users/$(id -un)/Pictures/unsplash-wallpapers -mtime +$dfrq -type f -delete #fresh-wallpaper" >> mycron.txt
     else
         echo "$fchg  /usr/local/bin/change-wallpaper $cxt #fresh-wallpaper" >> mycron.txt
-        echo "0 12 * * * find /Users/$(id -un)/Pictures/unsplash-wallpapers -mtime +$dfrq -type f -delete" >> mycron.txt
+        echo "0 12 * * * find /Users/$(id -un)/Pictures/unsplash-wallpapers -mtime +$dfrq -type f -delete #fresh-wallpaper" >> mycron.txt
     fi
 
     #install new cron file
