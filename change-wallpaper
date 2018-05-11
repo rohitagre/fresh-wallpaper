@@ -1,8 +1,11 @@
 #!/bin/sh
 PATH=/usr/local/bin:/usr/local/sbin:~/bin:/usr/bin:/bin:/usr/sbin:/sbin
-cd /Users/$(id -un)/Pictures/unsplash-wallpapers
-ls |sort -R |tail -$N |while read file; do
-    echo pwd
-    /usr/local/bin/wallpaper /Users/$(id -un)/Pictures/unsplash-wallpapers/$file fill
+if [[ -z "$cxt" ]]; then
+    curl -L -s --compressed "https://source.unsplash.com/1920x1080/daily" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/`date +"%s"`.jpg
+else
+    curl -L -s --compressed "https://source.unsplash.com/1920x1080/?$1" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/`date +"%s"`.jpg
+fi
+
+ls /Users/$(id -un)/Pictures/unsplash-wallpapers/*.jpg|sort -R |tail -n 1 |while read file; do
+    /usr/local/bin/wallpaper $file fill
 done
-cd /

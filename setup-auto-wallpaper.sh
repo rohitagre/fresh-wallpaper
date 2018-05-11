@@ -1,8 +1,6 @@
 #!/bin/sh
 PATH=/usr/local/bin:/usr/local/sbin:~/bin:/usr/bin:/bin:/usr/sbin:/sbin
 cd /tmp
-
-
 echo '
      _ ___  ___    -------------------
     (_) _ \/ _ \   | gimme wallpaper |
@@ -23,8 +21,12 @@ echo "This Script will create a new directory 'unsplash-wallpapers' \n under the
 read -r -p "Do you wish to Continue? [y/N] " response
 if [[ $response =~ ^[Yy]$ ]]; then
     if [ ! -e "/usr/local/bin/wallpaper" ]; then
-        curl -L "https://github.com/sindresorhus/macos-wallpaper/releases/latest" -o /usr/local/bin/wallpaper
+        curl -L -s "https://cdn.rawgit.com/jammer99/fresh-wallpaper/af83f767/wallpaper" -o /usr/local/bin/wallpaper
         chmod +x /usr/local/bin/wallpaper
+    fi
+    if [ ! -e "/usr/local/bin/change-wallpaper" ]; then
+        curl -L -s "https://cdn.rawgit.com/jammer99/fresh-wallpaper/02ffc991/change-wallpaper" -o /usr/local/bin/change-wallpaper
+        chmod +x /usr/local/bin/change-wallpaper
     fi
     mkdir -p /Users/$(id -un)/Pictures/unsplash-wallpapers
     echo "How Often do you want to get new wallpaper?"
@@ -38,24 +40,30 @@ if [[ $response =~ ^[Yy]$ ]]; then
 	1) 
             echo "Every Hour"
             freq="1 * * * *"
+            dfrq="2"
             fchg="2 * * * *";;
 	2) 
             echo "Twice a Day"
             freq="1 11,19 * * *"
+            dfrq="20"
             fchg="2 11,19 * * *";;
 	3) 
             echo "Once Every Day"
             freq="30 11 * * *"
+            dfrq="30"
             fchg="32 11 * * *";;
 	4) 
             echo "Every minute"
             freq="* * * * *"
+            dfrq="30"
             fchg="* * * * *";;
 
         *)
             echo "Once Every Day"
             freq="30 11 * * *"
+            dfrq="30"
             fchg="32 11 * * *";;
+
     esac
 
     
@@ -69,24 +77,21 @@ if [[ $response =~ ^[Yy]$ ]]; then
     read -r -p "Leave blank to fetch daily picture : " cxt
 
     if [[ -z "$cxt" ]]; then
-        echo "$freq curl -L --compressed "https://source.unsplash.com/1920x1080/daily" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg  >/dev/null 2>&1 #fresh-wallpaper" >> mycron.txt
-        curl -s -L --compressed "https://source.unsplash.com/1920x1080/daily" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg
-   
+        echo "32 11 * * *  /usr/local/bin/change-wallpaper #fresh-wallpaper" >> mycron.txt
+        echo "0 12 * * * find /Users/$(id -un)/Pictures/unsplash-wallpapers -mtime +$dfrq -type f -delete" >> mycron.txt
     else
-        echo "$freq curl -L --compressed "https://source.unsplash.com/1920x1080/?$cxt" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg  >/dev/null 2>&1 #fresh-wallpaper" >> mycron.txt
-        curl -s -L --compressed "https://source.unsplash.com/1920x1080/?$cxt" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg
+        echo "$fchg  /usr/local/bin/change-wallpaper $cxt #fresh-wallpaper" >> mycron.txt
+        echo "0 12 * * * find /Users/$(id -un)/Pictures/unsplash-wallpapers -mtime +$dfrq -type f -delete" >> mycron.txt
     fi
 
-    echo "$fchg  wallpaper /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg fill #fresh-wallpaper" >> mycron.txt
-
-#install new cron file
+    #install new cron file
 
     echo "Setting New cron"
     crontab mycron.txt
     rm mycron.txt
 
     echo "Changing wallpaper now!"
-    wallpaper /Users/$(id -un)/Pictures/unsplash-wallpapers/unsp.jpg fill
+    /usr/local/bin/change-wallpaper $cxt
     echo "Done!"
 
 else
