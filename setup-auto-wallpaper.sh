@@ -20,12 +20,14 @@ echo "This Script will create a new directory 'unsplash-wallpapers' \n under the
 
 read -r -p "Do you wish to Continue? [y/N] " response
 if [[ $response =~ ^[Yy]$ ]]; then
+    echo "Downloading Dependencies"
     curl -L -s "https://cdn.rawgit.com/jammer99/fresh-wallpaper/master/wallpaper" -o /usr/local/bin/wallpaper
     chmod +x /usr/local/bin/wallpaper
     
     curl -L -s "https://cdn.rawgit.com/jammer99/fresh-wallpaper/master/change-wallpaper" -o /usr/local/bin/change-wallpaper
     chmod +x /usr/local/bin/change-wallpaper
     
+    echo "Done"
     mkdir -p /Users/$(id -un)/Pictures/unsplash-wallpapers
     echo "How Often do you want to get new wallpaper?"
     echo "1. Every Hour"
