@@ -1,0 +1,5 @@
+#!/bin/sh
+PATH=/usr/local/bin:/usr/local/sbin:~/bin:/usr/bin:/bin:/usr/sbin:/sbin
+ls |sort -R |tail -$N |while read file; do
+    /usr/local/bin/wallpaper /Users/$(id -un)/Pictures/unsplash-wallpapers/$file fill
+done
