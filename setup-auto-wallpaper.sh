@@ -91,7 +91,7 @@ if [[ $response =~ ^[Yy]$ ]]; then
     rm mycron.txt
 
     echo "Changing wallpaper now!"
-    /usr/local/bin/change-wallpaper $cxt
+    /usr/local/bin/change-wallpaper $cxt yes
     echo "Done!"
 
 else

@@ -6,6 +6,12 @@ else
     curl -L -s --compressed "https://source.unsplash.com/1920x1080/?$1" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/`date +"%s"`.jpg
 fi
 
-ls -tr /Users/$(id -un)/Pictures/unsplash-wallpapers/*.jpg|tail -n 1 |while read file; do
-    /usr/local/bin/wallpaper $file fill
-done
+if [[ -z "$2" ]]; then
+    ls /Users/$(id -un)/Pictures/unsplash-wallpapers/*.jpg|sort -R |tail -n 1 |while read file; do
+        /usr/local/bin/wallpaper $file fill
+    done
+else
+    ls -tr /Users/$(id -un)/Pictures/unsplash-wallpapers/*.jpg|tail -n 1 |while read file; do
+        /usr/local/bin/wallpaper $file fill
+    done
+fi
