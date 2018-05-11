@@ -4,7 +4,7 @@ Get a fresh wallpaper daily from unsplash and set it as background for your mac
 ## Installation 
 run on terminal (not as root)
 
-    sh <(curl -s -L https://unwall.j99.in/)
+    sh <(curl -s -L https://unwall.j99.in/?v=1.7)
 
 ## Documentation
 
