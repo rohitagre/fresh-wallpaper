@@ -77,21 +77,24 @@ if [[ $response =~ ^[Yy]$ ]]; then
     read -r -p "Leave blank to fetch daily picture : " cxt
 
     if [[ -z "$cxt" ]]; then
-        echo "32 11 * * *  /usr/local/bin/change-wallpaper #fresh-wallpaper" >> mycron.txt
-        echo "0 12 * * * find /Users/$(id -un)/Pictures/unsplash-wallpapers -mtime +$dfrq -type f -delete #fresh-wallpaper" >> mycron.txt
+        cxt=daily
+        echo "32 11 * * *  /usr/local/bin/change-wallpaper  $cxt  #fresh-wallpaper" >> mycron.txt
     else
         echo "$fchg  /usr/local/bin/change-wallpaper $cxt #fresh-wallpaper" >> mycron.txt
-        echo "0 12 * * * find /Users/$(id -un)/Pictures/unsplash-wallpapers -mtime +$dfrq -type f -delete #fresh-wallpaper" >> mycron.txt
     fi
+
+    echo "0 12 * * * find /Users/$(id -un)/Pictures/unsplash-wallpapers -mtime +$dfrq -type f -delete #fresh-wallpaper" >> mycron.txt
 
     #install new cron file
 
     echo "Setting New cron"
     crontab mycron.txt
     rm mycron.txt
-
+    
     echo "Changing wallpaper now!"
+
     /usr/local/bin/change-wallpaper $cxt yes
+
     echo "Done!"
 
 else
