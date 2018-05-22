@@ -3,6 +3,8 @@ PATH=/usr/local/bin:/usr/local/sbin:~/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 if [[ $1 == "daily" ]]; then
     curl -L -s --compressed "https://source.unsplash.com/1920x1080/daily" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/`date +"%s"`.jpg
+elif [[ $1 == "random" ]]; then
+    curl -L -s --compressed "https://source.unsplash.com/random/1920x1080/" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/`date +"%s"`.jpg
 else
     curl -L -s --compressed "https://source.unsplash.com/1920x1080/?$1" -o /Users/$(id -un)/Pictures/unsplash-wallpapers/`date +"%s"`.jpg
 fi

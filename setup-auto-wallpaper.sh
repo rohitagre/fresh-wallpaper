@@ -73,6 +73,7 @@ if [[ $response =~ ^[Yy]$ ]]; then
 
     echo "\nSelect The category (search term) from which you want images to be downloaded? [ex. adventure, nature, business, love etc]"
     echo "Refer unsplash.com for possible categories (there are hundreds!)"
+    echo "Type 'random' to get a random picture"
 
     read -r -p "Leave blank to fetch daily picture : " cxt
 
