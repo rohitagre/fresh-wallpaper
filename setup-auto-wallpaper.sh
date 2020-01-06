@@ -30,6 +30,7 @@ if [[ $response =~ ^[Yy]$ ]]; then
     
     echo "Done"
     sudo mkdir -p /Users/$(id -un)/Pictures/unsplash-wallpapers
+    sudo chmod 777 /Users/$(id -un)/Pictures/unsplash-wallpapers
     echo "How Often do you want to get new wallpaper?"
     echo "1. Every Hour"
     echo "2. Twice a day"
