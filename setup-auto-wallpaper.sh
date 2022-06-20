@@ -22,7 +22,7 @@ read -r -p "Do you wish to Continue? [y/N] " response
 if [[ $response =~ ^[Yy]$ ]]; then
     echo "Downloading Dependencies (requires root)"
     sudo mkdir -p /usr/local/bin/
-    sudo curl -L -s "https://cdn.rawgit.com/jammer99/fresh-wallpaper/master/wallpaper" -o /usr/local/bin/wallpaper
+    sudo curl -sL "https://github.com/sindresorhus/macos-wallpaper/releases/latest/download/wallpaper.zip" | sudo tar xvz -C /usr/local/bin/
     sudo chmod +x /usr/local/bin/wallpaper
     
     sudo curl -L -s "https://cdn.rawgit.com/jammer99/fresh-wallpaper/master/change-wallpaper" -o /usr/local/bin/change-wallpaper
