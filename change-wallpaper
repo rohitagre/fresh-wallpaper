@@ -12,10 +12,10 @@ fi
 
 if [[ -z "$2" ]]; then
     ls /Users/$(id -un)/Pictures/unsplash-wallpapers/*.jpg|sort -R |tail -n 1 |while read file; do
-        /usr/local/bin/wallpaper $file fill
+        /usr/local/bin/wallpaper set $file --scale fill
     done
 else
     ls -tr /Users/$(id -un)/Pictures/unsplash-wallpapers/*.jpg|tail -n 1 |while read file; do
-        /usr/local/bin/wallpaper $file fill
+        /usr/local/bin/wallpaper set $file --scale fill
     done
 fi
