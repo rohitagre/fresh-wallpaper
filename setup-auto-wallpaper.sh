@@ -25,7 +25,7 @@ if [[ $response =~ ^[Yy]$ ]]; then
     sudo curl -sL "https://github.com/sindresorhus/macos-wallpaper/releases/latest/download/wallpaper.zip" | sudo tar xvz -C /usr/local/bin/
     sudo chmod +x /usr/local/bin/wallpaper
     
-    sudo curl -L -s "https://cdn.rawgit.com/jammer99/fresh-wallpaper/master/change-wallpaper" -o /usr/local/bin/change-wallpaper
+    sudo curl -L -s "https://github.com/rohitagre/fresh-wallpaper/raw/1.9.4/change-wallpaper" -o /usr/local/bin/change-wallpaper
     sudo chmod +x /usr/local/bin/change-wallpaper
     
     echo "Done"
