@@ -11,3 +11,5 @@ run on terminal (not as root)
 1. This script creates a new folder in your pictures directory `~/Pictures/unsplash-wallpapers`
 2. When prompted select the search term you would like wallpapers from. Refer [unsplash.com](https://unsplash.com)
 3. After selecting search term, it installs cron job to change your wallpaper every day once.
+
+Uses binary from https://github.com/sindresorhus/macos-wallpaper/
